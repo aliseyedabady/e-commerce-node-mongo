@@ -40,6 +40,14 @@ const userSchema = new Schema<IUser>(
       minlength: 6,
       select: false, // Don't return the password field in queries
     },
+    otp: {
+      code: {
+        type: String,
+      },
+      expiresAt: {
+        type: Date,
+      },
+    },
     birthDate: {
       type: Date,
     },

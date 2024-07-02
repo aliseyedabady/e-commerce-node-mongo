@@ -6,6 +6,10 @@ export interface IUser extends Document {
   mobile: string;
   isAdmin: boolean;
   password: string;
+  otp: {
+    code: string;
+    expiresAt: Date;
+  };
   birthDate?: Date;
   createdAt?: Date;
   updatedAt?: Date;
