@@ -8,6 +8,7 @@ interface EnvConfig {
   DB_Name: string;
   OTP_LENGTH: number;
   OTP_MIN_EXPIRE: number;
+  JWT_SECRET: string;
 }
 
 const config: EnvConfig = {
@@ -16,6 +17,7 @@ const config: EnvConfig = {
   DB_Name: process.env.DB_NAME || "",
   OTP_LENGTH: Number(process.env.OTP_LENGTH) || 6,
   OTP_MIN_EXPIRE: Number(process.env.OTP_MIN_EXPIRE) || 2,
+  JWT_SECRET: process.env.JWT_SECRET || "",
 };
 
 if (!config.MONGO_URI) {
@@ -24,6 +26,10 @@ if (!config.MONGO_URI) {
 
 if (!config.DB_Name) {
   throw new Error("Missing DB_NAME in environment variables");
+}
+
+if (!config.JWT_SECRET) {
+  throw new Error("Missing JWT_SECRET in environment variables");
 }
 
 export default config;
