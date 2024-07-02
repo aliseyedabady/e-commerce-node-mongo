@@ -7,6 +7,7 @@ interface EnvConfig {
   MONGO_URI: string;
   DB_Name: string;
   OTP_LENGTH: number;
+  OTP_MIN_EXPIRE: number;
 }
 
 const config: EnvConfig = {
@@ -14,6 +15,7 @@ const config: EnvConfig = {
   MONGO_URI: process.env.MONGO_URI || "",
   DB_Name: process.env.DB_NAME || "",
   OTP_LENGTH: Number(process.env.OTP_LENGTH) || 6,
+  OTP_MIN_EXPIRE: Number(process.env.OTP_MIN_EXPIRE) || 2,
 };
 
 if (!config.MONGO_URI) {
