@@ -1,5 +1,5 @@
 {
-  "name": "e-commerce-node-mongo",
+  "name": "food-ordering-mern-app",
   "version": "1.0.0",
   "main": "./src/app.js",
   "scripts": {
