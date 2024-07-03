@@ -1,15 +1,12 @@
 import jwt from "jsonwebtoken";
 import config from "../config/env";
 import { IUser } from "../interfaces";
+import { TCheckExist, TCheckUnique } from "./type";
 
 export const generateAccessToken = (user: IUser) => {
-  return jwt.sign(
-    { id: user._id, isAdmin: user.isAdmin },
-    config.JWT_SECRET,
-    {
-      expiresIn: config.JWT_EXPIRE,
-    }
-  );
+  return jwt.sign({ id: user._id, isAdmin: user.isAdmin }, config.JWT_SECRET, {
+    expiresIn: config.JWT_EXPIRE,
+  });
 };
 export const generateRefreshToken = (user: IUser) => {
   return jwt.sign({ id: user._id, isAdmin: user.isAdmin }, config.JWT_SECRET, {
@@ -26,4 +23,33 @@ export const generateOTP = (): string => {
   }
 
   return otp;
+};
+
+export const checkExist = async ({
+  model,
+  key,
+  value,
+  message,
+}: TCheckExist) => {
+  if (value) {
+    const result = await model.findOne({ [key]: value }).exec();
+    if (!result) {
+      throw Promise.reject(message);
+    }
+  }
+};
+
+
+export const checkUnique = async ({
+  value,
+  model,
+  key,
+  message,
+}: TCheckUnique) => {
+  if (value) {
+    const result = await model.findOne({ [key]: value }).exec();
+    if (result) {
+      return Promise.reject(message);
+    }
+  }
 };
