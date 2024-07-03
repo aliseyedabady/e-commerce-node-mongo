@@ -4,7 +4,7 @@ import User from "../models/User";
 import moment from "moment";
 import config from "../config/env";
 import jwt from "jsonwebtoken";
-import { generateAccessToken } from "../lib/utils";
+import { generateAccessToken } from "../lib";
 
 class AuthController {
   async sendOTP(req: Request, res: Response) {

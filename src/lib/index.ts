@@ -1,4 +1,4 @@
 import ResponseHandler from "./ResponseHandler";
-import { generateOTP } from "./otp";
+import { generateOTP, generateAccessToken } from "./utils";
 
-export { generateOTP, ResponseHandler };
+export { generateOTP, ResponseHandler, generateAccessToken };
