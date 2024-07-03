@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema , Document } from "mongoose";
 
 export interface IProduct extends Document {
   _id: string;
