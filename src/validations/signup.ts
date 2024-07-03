@@ -27,6 +27,11 @@ export const signupValidation = [
         message: "Mobile is already use!",
       });
     }),
+  body("password")
+    .isString()
+    .withMessage(() => "Password is required.")
+    .isLength({ min: 6 })
+    .withMessage(() => "Min length is 6 character."),
   body("isAdmin")
     .isBoolean()
     .withMessage(() => "isAdmin is required!"),

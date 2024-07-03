@@ -117,6 +117,7 @@ class AuthController {
       }
       const user = new User(req.body);
       await user.save();
+      ResponseHandler.success(res, user);
     } catch (error) {
       return ResponseHandler.error(res, error);
     }

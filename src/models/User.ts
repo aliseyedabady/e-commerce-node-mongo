@@ -24,7 +24,7 @@ const userSchema = new Schema<IUser>(
     mobile: {
       type: String,
       unique: true,
-      required : true,
+      required: true,
       match: [
         /(?:\+?\d{1,3}[-.\s]?)?(?:\(?\d{1,4}\)?[-.\s]?)?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
         "Please add a valid mobile",
@@ -39,7 +39,7 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: [true, "Please add a password"],
       minlength: 6,
-      select: false, // Don't return the password field in queries
+      select: false,
     },
     otp: {
       code: {
@@ -61,7 +61,15 @@ const userSchema = new Schema<IUser>(
       default: Date.now,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: {
+      transform: (_, ret) => {
+        delete ret.password;
+        return ret;
+      },
+    },
+  }
 );
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {

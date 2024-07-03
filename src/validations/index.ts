@@ -1,3 +1,4 @@
 import { adminLoginValidation } from "./adminLogin";
+import { signupValidation } from "./signup";
 
-export { adminLoginValidation };
+export { adminLoginValidation, signupValidation };
