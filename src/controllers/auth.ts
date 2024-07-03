@@ -16,7 +16,9 @@ class AuthController {
         });
         await user.save();
       }
-
+      if(user.otp && user.otp.expiresAt && moment(user.otp.expiresAt).isBefore(moment())){
+        return ResponseHandler.badRequest(res , `SMS sent! Please request after ${config.OTP_MIN_EXPIRE}`)
+      }
       // Send the OTP to the user via email or SMS here
 
       const code = generateOTP();
