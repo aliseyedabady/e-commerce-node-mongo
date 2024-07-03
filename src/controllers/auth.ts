@@ -61,6 +61,16 @@ class AuthController {
       return ResponseHandler.error(res, error);
     }
   }
+
+  async refresh(req: Request, res: Response) {
+    const { refreshToken } = req.body;
+    if (!refreshToken) return ResponseHandler.unauthorized(res);
+    jwt.verify(refreshToken, config.JWT_SECRET, (err: any, user: any) => {
+      if (err) return ResponseHandler.unauthorized(res);
+      const newAccessToken = generateAccessToken(user);
+      ResponseHandler.success(res, { accessToken: newAccessToken });
+    });
+  }
 }
 
 export default new AuthController();
