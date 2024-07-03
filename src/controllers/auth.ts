@@ -4,6 +4,7 @@ import User from "../models/User";
 import moment from "moment";
 import config from "../config/env";
 import jwt from "jsonwebtoken";
+import { generateAccessToken } from "../lib/utils";
 
 class AuthController {
   async sendOTP(req: Request, res: Response) {
@@ -16,8 +17,15 @@ class AuthController {
         });
         await user.save();
       }
-      if(user.otp && user.otp.expiresAt && moment(user.otp.expiresAt).isBefore(moment())){
-        return ResponseHandler.badRequest(res , `SMS sent! Please request after ${config.OTP_MIN_EXPIRE}`)
+      if (
+        user.otp &&
+        user.otp.expiresAt &&
+        moment(user.otp.expiresAt).isBefore(moment())
+      ) {
+        return ResponseHandler.badRequest(
+          res,
+          `SMS sent! Please request after ${config.OTP_MIN_EXPIRE}`
+        );
       }
       // Send the OTP to the user via email or SMS here
 
@@ -45,13 +53,13 @@ class AuthController {
       ) {
         user.otp = undefined;
         await user.save();
-        const token = jwt.sign({ userId: user._id }, config.JWT_SECRET, {
-          expiresIn: config.JWT_EXPIRE,
-        });
+        const token = generateAccessToken(user);
 
         return ResponseHandler.success(res, { token });
       }
-    } catch (error) {}
+    } catch (error) {
+      return ResponseHandler.error(res, error);
+    }
   }
 }
 
