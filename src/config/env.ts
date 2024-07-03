@@ -9,7 +9,8 @@ interface EnvConfig {
   OTP_MIN_EXPIRE: number;
   JWT_SECRET: string;
   JWT_EXPIRE: string;
-  JWT_REFRESH_EXPIRE:string
+  JWT_REFRESH_EXPIRE: string;
+  MODE: "development" | "production";
 }
 
 const config: EnvConfig = {
@@ -21,6 +22,7 @@ const config: EnvConfig = {
   JWT_SECRET: process.env.JWT_SECRET || "",
   JWT_EXPIRE: process.env.JWT_EXPIRE || "1h",
   JWT_REFRESH_EXPIRE: process.env.JWT_REFRESH_EXPIRE || "10d",
+  MODE: process.env.MODE === "production" ? "production" : "development",
 };
 
 if (!config.MONGO_URI) {
