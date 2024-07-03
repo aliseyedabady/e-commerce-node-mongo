@@ -24,6 +24,7 @@ const userSchema = new Schema<IUser>(
     mobile: {
       type: String,
       unique: true,
+      required : true,
       match: [
         /(?:\+?\d{1,3}[-.\s]?)?(?:\(?\d{1,4}\)?[-.\s]?)?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
         "Please add a valid mobile",
