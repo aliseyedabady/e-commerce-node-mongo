@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import { generateOTP, ResponseHandler } from "../utils";
+import { generateOTP, ResponseHandler } from "../lib";
 import User from "../models/User";
 import moment from "moment";
 import config from "../config/env";
+import jwt from "jsonwebtoken";
 
 class AuthController {
   async sendOTP(req: Request, res: Response) {
@@ -42,7 +43,11 @@ class AuthController {
       ) {
         user.otp = undefined;
         await user.save();
-        return ResponseHandler.success(res, {});
+        const token = jwt.sign({ userId: user._id }, config.JWT_SECRET, {
+          expiresIn: config.JWT_EXPIRE,
+        });
+
+        return ResponseHandler.success(res, { token });
       }
     } catch (error) {}
   }
