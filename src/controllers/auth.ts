@@ -64,12 +64,44 @@ class AuthController {
 
   async refresh(req: Request, res: Response) {
     const { refreshToken } = req.body;
-    if (!refreshToken) return ResponseHandler.unauthorized(res);
-    jwt.verify(refreshToken, config.JWT_SECRET, (err: any, user: any) => {
-      if (err) return ResponseHandler.unauthorized(res);
-      const newAccessToken = generateAccessToken(user);
-      ResponseHandler.success(res, { accessToken: newAccessToken });
-    });
+    try {
+      if (!refreshToken) return ResponseHandler.unauthorized(res);
+      jwt.verify(refreshToken, config.JWT_SECRET, (err: any, user: any) => {
+        if (err) return ResponseHandler.unauthorized(res);
+        const newAccessToken = generateAccessToken(user);
+        ResponseHandler.success(res, { accessToken: newAccessToken });
+      });
+    } catch (error) {
+      return ResponseHandler.error(res, error);
+    }
+  }
+
+  async adminLogin(req: Request, res: Response) {
+    const { mobile, password } = req.body;
+    try {
+      const user = await User.findOne({ mobile });
+      if (!user) {
+        return ResponseHandler.badRequest(res, "mobile or password is wrong!");
+      }
+      if (user && !user.isAdmin) {
+        return ResponseHandler.badRequest(res, "mobile or password is wrong!");
+      }
+      if (user.matchPassword) {
+        const checkPassword = await user.matchPassword(password);
+        if (checkPassword) {
+          const newAccessToken = generateAccessToken(user);
+          ResponseHandler.success(res, { accessToken: newAccessToken });
+        } else {
+          return ResponseHandler.badRequest(
+            res,
+            "mobile or password is wrong!"
+          );
+        }
+      }
+      return ResponseHandler.badRequest(res, "mobile or password is wrong!");
+    } catch (error) {
+      return ResponseHandler.error(res, error);
+    }
   }
 }
 
