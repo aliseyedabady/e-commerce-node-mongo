@@ -18,3 +18,17 @@ const PORT = config.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on port localhost:${PORT}`);
 });
+
+const startServer = async () => {
+  try {
+    await connectDB();
+    const PORT = config.PORT;
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (error: any) {
+    console.error(`Failed to start server: ${error.message}`);
+  }
+};
+
+startServer();
