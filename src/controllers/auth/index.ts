@@ -95,7 +95,7 @@ class AuthController {
         const checkPassword = await user.matchPassword(password);
         if (checkPassword) {
           const newAccessToken = generateAccessToken(user);
-          ResponseHandler.success(res, { accessToken: newAccessToken });
+          return ResponseHandler.success(res, { accessToken: newAccessToken });
         } else {
           return ResponseHandler.badRequest(
             res,
@@ -117,7 +117,7 @@ class AuthController {
       }
       const user = new User(req.body);
       await user.save();
-      ResponseHandler.success(res, user);
+      return ResponseHandler.success(res, user);
     } catch (error) {
       return ResponseHandler.error(res, error);
     }
