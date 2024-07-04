@@ -21,6 +21,7 @@ class ResponseHandler {
     message = "Server Error",
     statusCode = 500
   ): Response {
+    console.log({ error });
     return res.status(statusCode).json({
       status: "error",
       message,
