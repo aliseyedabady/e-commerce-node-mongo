@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { generateOTP, ResponseHandler } from "../lib";
-import User from "../models/User";
+import { generateOTP, ResponseHandler } from "../../lib";
+import User from "../../models/User";
 import moment from "moment";
-import config from "../config/env";
+import config from "../../config/env";
 import jwt from "jsonwebtoken";
-import { generateAccessToken } from "../lib";
+import { generateAccessToken } from "../../lib";
 import { validationResult } from "express-validator";
 
 class AuthController {
