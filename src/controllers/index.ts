@@ -1,3 +1,4 @@
 import AuthController from "./auth";
+import ProductController from "./product";
 
-export { AuthController };
+export { AuthController, ProductController };
