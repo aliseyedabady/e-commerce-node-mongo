@@ -39,7 +39,6 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: [true, "Please add a password"],
       minlength: 6,
-      select: false,
     },
     otp: {
       code: {
