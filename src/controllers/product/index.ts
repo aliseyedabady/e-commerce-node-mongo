@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
-import upload from "../../config/multer";
-import { ResponseHandler } from "../../lib";
 import { validationResult } from "express-validator";
-import { Product, Image } from "../../models";
+import { ResponseHandler } from "../../lib";
+import { Image, Product } from "../../models";
 
 class ProductController {
   async create(req: Request, res: Response) {
