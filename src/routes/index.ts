@@ -1,9 +1,17 @@
 import { Router } from "express";
 import { AdminMiddleware } from "../middlewares";
-import { AuthController, ProductController } from "../controllers";
-import { adminLoginValidation, signupValidation } from "../validations";
+import {
+  AuthController,
+  CategoryController,
+  ProductController,
+} from "../controllers";
+import {
+  adminLoginValidation,
+  createCategoryValidation,
+  createProductValidation,
+  signupValidation,
+} from "../validations";
 import config from "../config/env";
-import { createProductValidation } from "../validations/createProduct";
 import upload from "../config/multer";
 
 const api = Router();
@@ -24,5 +32,19 @@ api.get("/admin/products", ProductController.findAll);
 api.get("/admin/products/:id", ProductController.findOne);
 api.put("/admin/products/:id", ProductController.update);
 api.delete("/admin/products/:id", ProductController.delete);
+
+api.post(
+  "/admin/categories",
+  createCategoryValidation,
+  CategoryController.create
+);
+api.get("/admin/categories", CategoryController.findAll);
+api.get("/admin/categories/:id", CategoryController.findOne);
+api.put(
+  "/admin/categories/:id",
+
+  CategoryController.update
+);
+api.delete("/admin/categories/:id", CategoryController.delete);
 
 export default api;
