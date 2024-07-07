@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { AdminMiddleware } from "../middlewares";
+import { AdminMiddleware, validateObjectIdMiddleware } from "../middlewares";
 import {
   AuthController,
   CategoryController,
@@ -10,6 +10,7 @@ import {
   createCategoryValidation,
   createProductValidation,
   signupValidation,
+  updateCategoryValidation,
 } from "../validations";
 import config from "../config/env";
 import upload from "../config/multer";
@@ -20,7 +21,7 @@ if (config.MODE === "development") {
   api.post("/signup", signupValidation, AuthController.signup);
 }
 api.post("/admin/login", adminLoginValidation, AuthController.adminLogin);
-api.use("/admin", AdminMiddleware);
+// api.use("/admin", AdminMiddleware);
 
 api.post(
   "/admin/products",
@@ -29,8 +30,16 @@ api.post(
   ProductController.create
 );
 api.get("/admin/products", ProductController.findAll);
-api.get("/admin/products/:id", ProductController.findOne);
-api.put("/admin/products/:id", ProductController.update);
+api.get(
+  "/admin/products/:id",
+  validateObjectIdMiddleware,
+  ProductController.findOne
+);
+api.put(
+  "/admin/products/:id",
+  validateObjectIdMiddleware,
+  ProductController.update
+);
 api.delete("/admin/products/:id", ProductController.delete);
 
 api.post(
@@ -39,12 +48,21 @@ api.post(
   CategoryController.create
 );
 api.get("/admin/categories", CategoryController.findAll);
-api.get("/admin/categories/:id", CategoryController.findOne);
+api.get(
+  "/admin/categories/:id",
+  validateObjectIdMiddleware,
+  CategoryController.findOne
+);
 api.put(
   "/admin/categories/:id",
-
+  validateObjectIdMiddleware,
+  updateCategoryValidation,
   CategoryController.update
 );
-api.delete("/admin/categories/:id", CategoryController.delete);
+api.delete(
+  "/admin/categories/:id",
+  validateObjectIdMiddleware,
+  CategoryController.delete
+);
 
 export default api;
