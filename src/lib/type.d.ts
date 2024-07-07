@@ -14,4 +14,12 @@ type TCheckUnique = {
   key: string;
 };
 
-export { TCheckExist, TCheckUnique };
+type TCheckUniqueUpdate = {
+  model: typeof Model;
+  key: string;
+  value: string;
+  id: string | undefined;
+  message: string;
+};
+
+export { TCheckExist, TCheckUnique, TCheckUniqueUpdate };
