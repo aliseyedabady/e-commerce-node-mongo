@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { ResponseHandler } from "../../lib";
 import { Category } from "../../models";
-import { PaginationParameters } from "mongoose-paginate-v2";
 
 class CategoryController {
   async create(req: Request, res: Response) {
@@ -44,7 +43,22 @@ class CategoryController {
     const { id } = req.params;
     const updateData = req.body;
     try {
-    } catch (error) {}
+      const category = await Category.findById(id);
+      if (category) {
+        const categoryUpdated = await Category.findByIdAndUpdate(
+          id,
+          updateData,
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+        return ResponseHandler.success(res, categoryUpdated);
+      }
+      return ResponseHandler.notFound(res);
+    } catch (error) {
+      return ResponseHandler.error(res, error);
+    }
   }
   async delete() {}
 }
