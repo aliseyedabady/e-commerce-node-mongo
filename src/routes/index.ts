@@ -21,7 +21,7 @@ if (config.MODE === "development") {
   api.post("/signup", signupValidation, AuthController.signup);
 }
 api.post("/admin/login", adminLoginValidation, AuthController.adminLogin);
-// api.use("/admin", AdminMiddleware);
+api.use("/admin", AdminMiddleware);
 
 api.post(
   "/admin/products",
