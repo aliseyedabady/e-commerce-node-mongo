@@ -62,7 +62,7 @@ class ResponseHandler {
     });
   }
   unauthorized(res: Response, statusCode = 401) {
-    return res.status(statusCode);
+    return res.status(statusCode).json("Unauthorized");
   }
 }
 
