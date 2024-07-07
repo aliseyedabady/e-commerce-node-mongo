@@ -60,7 +60,23 @@ class CategoryController {
       return ResponseHandler.error(res, error);
     }
   }
-  async delete() {}
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+    try {
+      const category = await Category.findById(id);
+      if (category) {
+        await Category.findByIdAndUpdate(
+          id,
+          { isDeleted: true },
+          { new: true }
+        );
+        return ResponseHandler.success(res);
+      }
+      return ResponseHandler.notFound(res);
+    } catch (error) {
+      return ResponseHandler.error(res, error);
+    }
+  }
 }
 
 export default new CategoryController();
