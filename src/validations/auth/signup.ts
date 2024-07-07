@@ -1,6 +1,6 @@
 import { body } from "express-validator";
-import { checkUnique } from "../lib";
-import { User } from "../models";
+import { checkUnique } from "../../lib";
+import { User } from "../../models";
 
 export const signupValidation = [
   body("email")

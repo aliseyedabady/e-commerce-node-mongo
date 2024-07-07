@@ -1,6 +1,6 @@
 import { body } from "express-validator";
-import { checkExist } from "../lib";
-import { User } from "../models";
+import { checkExist } from "../../lib";
+import { User } from "../../models";
 
 export const adminLoginValidation = [
   body("mobile")
