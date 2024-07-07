@@ -17,7 +17,7 @@ const upload = multer({
   fileFilter: (req, file, cb) => {
     checkFileType(file, cb);
   },
-}).array("images", 10);
+});
 
 function checkFileType(
   file: Express.Multer.File,
