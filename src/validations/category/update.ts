@@ -1,5 +1,5 @@
 import { body } from "express-validator";
-import { checkExist, checkUnique, checkUniqueUpdate } from "../../lib";
+import { checkUnique, checkUniqueUpdate } from "../../lib";
 import { Category } from "../../models";
 
 export const updateCategoryValidation = [
