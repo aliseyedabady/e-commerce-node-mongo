@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 import config from "./env";
+import { softDeletePlugin } from "../plugins";
+
+mongoose.plugin(softDeletePlugin)
 
 const connectDB = async (): Promise<void> => {
   try {
