@@ -4,12 +4,12 @@ import { IUser } from "../interfaces";
 import { TCheckExist, TCheckUnique, TCheckUniqueUpdate } from "./type";
 
 export const generateAccessToken = (user: IUser) => {
-  return jwt.sign({ id: user._id, isAdmin: user.isAdmin }, config.JWT_SECRET, {
+  return jwt.sign({ _id: user._id, isAdmin: user.isAdmin }, config.JWT_SECRET, {
     expiresIn: config.JWT_EXPIRE,
   });
 };
 export const generateRefreshToken = (user: IUser) => {
-  return jwt.sign({ id: user._id, isAdmin: user.isAdmin }, config.JWT_SECRET, {
+  return jwt.sign({ _id: user._id, isAdmin: user.isAdmin }, config.JWT_SECRET, {
     expiresIn: config.JWT_REFRESH_EXPIRE,
   });
 };
