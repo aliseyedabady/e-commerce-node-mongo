@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
-import { RequestUser } from "./type.d";
+import { RequestUser } from "./type";
 import config from "../config/env";
 import { ResponseHandler } from "../lib";
 
